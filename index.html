@@ -27,11 +27,11 @@
       color: #666;
     }
     .api-setup {
-      background: #fff;
-      border: 1px solid #ddd;
+      background: #f5f5f5;
+      border-top: 1px solid #ddd;
       padding: 16px;
-      border-radius: 8px;
-      margin-bottom: 24px;
+      margin-top: 40px;
+      font-size: 13px;
     }
     .api-setup label {
       display: block;
@@ -39,7 +39,7 @@
       margin-bottom: 8px;
       color: #555;
     }
-    .api-setup input[type="text"] {
+    .api-setup input[type="password"] {
       width: 70%;
       padding: 8px;
       border: 1px solid #ccc;
@@ -164,12 +164,6 @@
     <p class="tagline">Search without algorithmic nudging. No thumbnails. No recommendations. Just text and intention.</p>
   </header>
 
-  <div class="api-setup">
-    <label for="apiKey">Paste YouTube API Key (stored locally):</label>
-    <input type="text" id="apiKey" placeholder="Your YouTube Data API v3 key">
-    <button id="saveKey">Save Key</button>
-  </div>
-
   <div class="search-box">
     <input type="text" id="query" placeholder="Search YouTube by keywords..." autofocus>
     <button id="searchBtn">Search</button>
@@ -183,10 +177,17 @@
 
     <section id="results" class="results"></section>
     <div id="status" class="status"></div>
-    <div class="status">
-      API docs: <a class="quiet-link" href="https://developers.google.com/youtube/v3/docs/search/list" target="_blank" rel="noopener">YouTube Data API v3</a>
-    </div>
   </div>
+
+  <footer class="api-setup">
+    <label for="apiKey">YouTube API Key Setup (stored locally, one-time):</label>
+    <input type="password" id="apiKey" placeholder="Paste your YouTube Data API v3 key here">
+    <button id="saveKey">Save Key</button>
+    <div class="status">
+      Need a key? <a class="quiet-link" href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a> • 
+      <a class="quiet-link" href="https://developers.google.com/youtube/v3/docs/search/list" target="_blank" rel="noopener">API Docs</a>
+    </div>
+  </footer>
 
   <script>
     const API_BASE = "https://www.googleapis.com/youtube/v3/search";
