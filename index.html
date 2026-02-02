@@ -264,7 +264,8 @@
     }
 
     function playVideo(videoId, title) {
-      els.playerFrame.src = `https://www.youtube.com/embed/${videoId}`;
+      // Use nocookie domain + autoplay for better local file compatibility
+      els.playerFrame.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
       els.playerTitle.textContent = `Playing: ${title}`;
       els.player.classList.remove("hidden");
       window.scrollTo({ top: 0, behavior: "smooth" });
