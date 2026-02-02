@@ -173,6 +173,9 @@
     <section id="player" class="player hidden">
       <h3 id="playerTitle">Playing:</h3>
       <iframe id="playerFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <div style="margin-top: 12px; font-size: 13px; color: #666;">
+        Video not loading? <a id="watchOnYT" href="#" target="_blank" rel="noopener" style="color: #0066cc;">Watch on YouTube</a>
+      </div>
     </section>
 
     <section id="results" class="results"></section>
@@ -200,6 +203,7 @@
       player: document.getElementById("player"),
       playerTitle: document.getElementById("playerTitle"),
       playerFrame: document.getElementById("playerFrame"),
+      watchOnYT: document.getElementById("watchOnYT"),
       apiKey: document.getElementById("apiKey"),
       saveKey: document.getElementById("saveKey"),
     };
@@ -267,6 +271,7 @@
       // Use nocookie domain + autoplay for better local file compatibility
       els.playerFrame.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
       els.playerTitle.textContent = `Playing: ${title}`;
+      els.watchOnYT.href = `https://www.youtube.com/watch?v=${videoId}`;
       els.player.classList.remove("hidden");
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
