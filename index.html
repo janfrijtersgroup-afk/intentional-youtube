@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intentional YouTube</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fafafa;
+      color: #202020;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 40px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .tagline {
+      font-size: 14px;
+      color: #666;
+    }
+    .api-setup {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+    .api-setup label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    .api-setup input[type="text"] {
+      width: 70%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 13px;
+      margin-right: 8px;
+    }
+    .api-setup button {
+      padding: 8px 16px;
+      border: none;
+      background: #0066cc;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .api-setup button:hover {
+      background: #0052a3;
+    }
+    .search-box {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+    }
+    .search-box input[type="text"] {
+      width: calc(100% - 100px);
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 15px;
+      margin-right: 8px;
+    }
+    .search-box button {
+      padding: 12px 24px;
+      border: none;
+      background: #333;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .search-box button:hover {
+      background: #000;
+    }
+    .player {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .player h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .player iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+      border-radius: 4px;
+    }
+    .hidden {
+      display: none;
+    }
+    .results {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .result {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .result-title button {
+      border: none;
+      background: none;
+      font-size: 16px;
+      font-weight: 600;
+      color: #0066cc;
+      cursor: pointer;
+      text-align: left;
+      padding: 0;
+      text-decoration: underline;
+    }
+    .result-title button:hover {
+      color: #0052a3;
+    }
+    .meta {
+      font-size: 13px;
+      color: #666;
+      margin-top: 6px;
+    }
+    .desc {
+      font-size: 14px;
+      color: #444;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    .status {
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      margin: 20px 0;
+    }
+    .quiet-link {
+      color: #666;
+      text-decoration: none;
+    }
+    .quiet-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Intentional YouTube</h1>
+    <p class="tagline">Search without algorithmic nudging. No thumbnails. No recommendations. Just text and intention.</p>
+  </header>
+
+  <div class="api-setup">
+    <label for="apiKey">Paste YouTube API Key (stored locally):</label>
+    <input type="text" id="apiKey" placeholder="Your YouTube Data API v3 key">
+    <button id="saveKey">Save Key</button>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="query" placeholder="Search YouTube by keywords..." autofocus>
+    <button id="searchBtn">Search</button>
+  </div>
+
+  <div class="container">
+    <section id="player" class="player hidden">
+      <h3 id="playerTitle">Playing:</h3>
+      <iframe id="playerFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </section>
+
+    <section id="results" class="results"></section>
+    <div id="status" class="status"></div>
+    <div class="status">
+      API docs: <a class="quiet-link" href="https://developers.google.com/youtube/v3/docs/search/list" target="_blank" rel="noopener">YouTube Data API v3</a>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "https://www.googleapis.com/youtube/v3/search";
+
+    const els = {
+      query: document.getElementById("query"),
+      searchBtn: document.getElementById("searchBtn"),
+      results: document.getElementById("results"),
+      status: document.getElementById("status"),
+      player: document.getElementById("player"),
+      playerTitle: document.getElementById("playerTitle"),
+      playerFrame: document.getElementById("playerFrame"),
+      apiKey: document.getElementById("apiKey"),
+      saveKey: document.getElementById("saveKey"),
+    };
+
+    function setStatus(msg) {
+      els.status.textContent = msg || "";
+    }
+
+    function formatDate(iso) {
+      if (!iso) return "Unknown date";
+      const d = new Date(iso);
+      return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+    }
+
+    function clearResults() {
+      els.results.innerHTML = "";
+    }
+
+    function renderResults(items) {
+      clearResults();
+      if (!items.length) {
+        setStatus("No results.");
+        return;
+      }
+      items.forEach((item) => {
+        const id = item.id && item.id.videoId;
+        if (!id) return;
+
+        const title = item.snippet.title;
+        const channel = item.snippet.channelTitle;
+        const date = formatDate(item.snippet.publishedAt);
+        const desc = item.snippet.description || "No description.";
+
+        const wrapper = document.createElement("article");
+        wrapper.className = "result";
+
+        const h = document.createElement("h2");
+        h.className = "result-title";
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = title;
+        btn.addEventListener("click", () => playVideo(id, title));
+
+        h.appendChild(btn);
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.textContent = `${channel} • ${date}`;
+
+        const p = document.createElement("p");
+        p.className = "desc";
+        p.textContent = desc;
+
+        wrapper.appendChild(h);
+        wrapper.appendChild(meta);
+        wrapper.appendChild(p);
+
+        els.results.appendChild(wrapper);
+      });
+      setStatus(`${items.length} results.`);
+    }
+
+    function playVideo(videoId, title) {
+      els.playerFrame.src = `https://www.youtube.com/embed/${videoId}`;
+      els.playerTitle.textContent = `Playing: ${title}`;
+      els.player.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function getKey() {
+      return localStorage.getItem("yt_api_key") || "";
+    }
+
+    function saveKey() {
+      const key = els.apiKey.value.trim();
+      if (key) {
+        localStorage.setItem("yt_api_key", key);
+        setStatus("API key saved locally.");
+      } else {
+        localStorage.removeItem("yt_api_key");
+        setStatus("API key cleared.");
+      }
+    }
+
+    async function search() {
+      const q = els.query.value.trim();
+      if (!q) {
+        setStatus("Type a search query.");
+        return;
+      }
+      const key = getKey();
+      if (!key) {
+        setStatus("Add your API key first.");
+        return;
+      }
+
+      setStatus("Searching…");
+      els.searchBtn.disabled = true;
+
+      const params = new URLSearchParams({
+        part: "snippet",
+        type: "video",
+        maxResults: "12",
+        q,
+        key,
+      });
+
+      try {
+        const res = await fetch(`${API_BASE}?${params.toString()}`);
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text || `HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        renderResults(data.items || []);
+      } catch (err) {
+        setStatus("Error fetching results. Check your API key and quota.");
+        console.error(err);
+      } finally {
+        els.searchBtn.disabled = false;
+      }
+    }
+
+    els.searchBtn.addEventListener("click", search);
+    els.query.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") search();
+    });
+    els.saveKey.addEventListener("click", saveKey);
+
+    // Load saved key
+    els.apiKey.value = getKey();
+  </script>
+</body>
+</html>
