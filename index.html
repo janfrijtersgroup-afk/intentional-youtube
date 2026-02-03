@@ -11,7 +11,7 @@
       background: #fafafa;
       color: #202020;
       padding: 20px;
-      max-width: 800px;
+      max-width: 900px;
       margin: 0 auto;
     }
     header {
@@ -26,6 +26,176 @@
       font-size: 14px;
       color: #666;
     }
+    .search-box {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+    }
+    .search-box label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .search-box textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 15px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 100px;
+      margin-bottom: 12px;
+    }
+    .search-box button {
+      padding: 12px 24px;
+      border: none;
+      background: #333;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .search-box button:hover {
+      background: #000;
+    }
+    .search-box button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+    .pipeline-status {
+      font-size: 13px;
+      color: #666;
+      margin-top: 12px;
+      font-style: italic;
+    }
+    .summary-box {
+      background: #f0f8ff;
+      border: 1px solid #b3d9ff;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .summary-box h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .summary-box p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #333;
+    }
+    .player {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+    .player h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .player iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+      border-radius: 4px;
+    }
+    .player-fallback {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #666;
+    }
+    .player-fallback a {
+      color: #0066cc;
+    }
+    .hidden {
+      display: none;
+    }
+    .results {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .result {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .result-rank {
+      display: inline-block;
+      background: #333;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .result-title button {
+      border: none;
+      background: none;
+      font-size: 16px;
+      font-weight: 600;
+      color: #0066cc;
+      cursor: pointer;
+      text-align: left;
+      padding: 0;
+      text-decoration: underline;
+    }
+    .result-title button:hover {
+      color: #0052a3;
+    }
+    .meta {
+      font-size: 13px;
+      color: #666;
+      margin-top: 6px;
+    }
+    .reasoning {
+      font-size: 13px;
+      color: #555;
+      margin-top: 8px;
+      padding: 8px;
+      background: #f9f9f9;
+      border-left: 3px solid #0066cc;
+      font-style: italic;
+    }
+    .desc {
+      font-size: 14px;
+      color: #444;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    .toggle-all {
+      text-align: center;
+      margin: 24px 0;
+    }
+    .toggle-all button {
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #333;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .toggle-all button:hover {
+      background: #f5f5f5;
+    }
+    .status {
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      margin: 20px 0;
+    }
     .api-setup {
       background: #f5f5f5;
       border-top: 1px solid #ddd;
@@ -38,6 +208,10 @@
       font-size: 13px;
       margin-bottom: 8px;
       color: #555;
+      font-weight: 600;
+    }
+    .api-key-row {
+      margin-bottom: 16px;
     }
     .api-setup input[type="password"] {
       width: 70%;
@@ -59,96 +233,6 @@
     .api-setup button:hover {
       background: #0052a3;
     }
-    .search-box {
-      background: #fff;
-      border: 1px solid #ddd;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 32px;
-    }
-    .search-box input[type="text"] {
-      width: calc(100% - 100px);
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 15px;
-      margin-right: 8px;
-    }
-    .search-box button {
-      padding: 12px 24px;
-      border: none;
-      background: #333;
-      color: #fff;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 15px;
-    }
-    .search-box button:hover {
-      background: #000;
-    }
-    .player {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 32px;
-    }
-    .player h3 {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-    .player iframe {
-      width: 100%;
-      height: 450px;
-      border: none;
-      border-radius: 4px;
-    }
-    .hidden {
-      display: none;
-    }
-    .results {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-    .result {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 16px;
-    }
-    .result-title button {
-      border: none;
-      background: none;
-      font-size: 16px;
-      font-weight: 600;
-      color: #0066cc;
-      cursor: pointer;
-      text-align: left;
-      padding: 0;
-      text-decoration: underline;
-    }
-    .result-title button:hover {
-      color: #0052a3;
-    }
-    .meta {
-      font-size: 13px;
-      color: #666;
-      margin-top: 6px;
-    }
-    .desc {
-      font-size: 14px;
-      color: #444;
-      margin-top: 8px;
-      line-height: 1.5;
-    }
-    .status {
-      font-size: 13px;
-      color: #666;
-      text-align: center;
-      margin: 20px 0;
-    }
     .quiet-link {
       color: #666;
       text-decoration: none;
@@ -161,55 +245,152 @@
 <body>
   <header>
     <h1>Intentional YouTube</h1>
-    <p class="tagline">Search without algorithmic nudging. No thumbnails. No recommendations. Just text and intention.</p>
+    <p class="tagline">Describe what you're looking for. Your algorithm, your rules.</p>
   </header>
 
   <div class="search-box">
-    <input type="text" id="query" placeholder="Search YouTube by keywords..." autofocus>
-    <button id="searchBtn">Search</button>
+    <label for="query">What are you looking for?</label>
+    <textarea id="query" placeholder="Describe in detail what you're trying to learn or understand. Be specific about your goals, context, and what would make a video valuable to you..." autofocus></textarea>
+    <button id="searchBtn">🎯 Find Videos</button>
+    <div id="pipelineStatus" class="pipeline-status"></div>
   </div>
 
   <div class="container">
+    <section id="summary" class="summary-box hidden">
+      <h3>Why these videos match your intent:</h3>
+      <p id="summaryText"></p>
+    </section>
+
     <section id="player" class="player hidden">
       <h3 id="playerTitle">Playing:</h3>
       <iframe id="playerFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <div style="margin-top: 12px; font-size: 13px; color: #666;">
-        Video not loading? <a id="watchOnYT" href="#" target="_blank" rel="noopener" style="color: #0066cc;">Watch on YouTube</a>
+      <div class="player-fallback">
+        Video not loading? <a id="watchOnYT" href="#" target="_blank" rel="noopener">Watch on YouTube</a>
       </div>
     </section>
 
     <section id="results" class="results"></section>
+    
+    <div id="toggleContainer" class="toggle-all hidden">
+      <button id="toggleAll">Show all 50 results</button>
+    </div>
+
     <div id="status" class="status"></div>
   </div>
 
   <footer class="api-setup">
-    <label for="apiKey">YouTube API Key Setup (stored locally, one-time):</label>
-    <input type="password" id="apiKey" placeholder="Paste your YouTube Data API v3 key here">
-    <button id="saveKey">Save Key</button>
+    <div class="api-key-row">
+      <label for="ytApiKey">YouTube API Key (stored locally):</label>
+      <input type="password" id="ytApiKey" placeholder="YouTube Data API v3 key">
+      <button id="saveYtKey">Save</button>
+    </div>
+    <div class="api-key-row">
+      <label for="openaiApiKey">OpenAI API Key (stored locally):</label>
+      <input type="password" id="openaiApiKey" placeholder="OpenAI API key (uses gpt-4o-mini)">
+      <button id="saveOpenAiKey">Save</button>
+    </div>
     <div class="status">
-      Need a key? <a class="quiet-link" href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a> • 
-      <a class="quiet-link" href="https://developers.google.com/youtube/v3/docs/search/list" target="_blank" rel="noopener">API Docs</a>
+      Need keys? 
+      <a class="quiet-link" href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a> • 
+      <a class="quiet-link" href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">OpenAI API Keys</a>
     </div>
   </footer>
 
   <script>
-    const API_BASE = "https://www.googleapis.com/youtube/v3/search";
+    // === CONFIGURATION ===
+    const CONFIG = {
+      youtubeApiBase: "https://www.googleapis.com/youtube/v3/search",
+      openaiApiBase: "https://api.openai.com/v1/chat/completions",
+      openaiModel: "gpt-4o-mini", // Change to "gpt-5-nano" if that's the correct model name
+      maxResults: 50,
+      topResultsToShow: 5
+    };
 
+    // === PROMPTS (easily editable) ===
+    const PROMPTS = {
+      translate: `You are a YouTube search query optimizer. The user has given you a detailed, verbose description of what they're looking for. 
+
+Your task:
+1. Extract the core concepts and key terms
+2. Generate an optimized YouTube search query (3-8 words max)
+3. Return a JSON object with:
+   - "query": the optimized search string
+   - "keyConcepts": array of key concepts to match against (for later relevance scoring)
+
+User's description: {{USER_INPUT}}
+
+Respond with ONLY valid JSON, no additional text.`,
+
+      classify: `You are evaluating YouTube search results for quality and relevance.
+
+Original user intent: {{USER_INPUT}}
+Key concepts to match: {{KEY_CONCEPTS}}
+
+For each video, evaluate:
+- NEGATIVE signals (clickbait titles, engagement farming, shallow content indicators)
+- POSITIVE signals (information density, depth, substantive titles, educational markers)
+- RELEVANCE to key concepts (pattern matching to user's intent)
+
+Return a JSON array of objects with:
+- "videoId": the video ID
+- "score": 0-100 (overall quality + relevance)
+- "reasoning": brief explanation (2-3 sentences max)
+
+Videos to evaluate:
+{{VIDEOS}}
+
+Respond with ONLY valid JSON array, no additional text.`,
+
+      rank: `You are producing a final ranked list and summary for the user.
+
+Original user request: {{USER_INPUT}}
+
+You have scored videos. Now:
+1. Select the top {{TOP_N}} videos
+2. Write a 2-3 sentence summary explaining HOW these videos match the user's intent
+3. Return JSON with:
+   - "summary": your explanation
+   - "ranked": array of top video objects (videoId, score, reasoning)
+
+Scored videos:
+{{SCORED_VIDEOS}}
+
+Respond with ONLY valid JSON, no additional text.`
+    };
+
+    // === DOM ELEMENTS ===
     const els = {
       query: document.getElementById("query"),
       searchBtn: document.getElementById("searchBtn"),
+      pipelineStatus: document.getElementById("pipelineStatus"),
+      summary: document.getElementById("summary"),
+      summaryText: document.getElementById("summaryText"),
       results: document.getElementById("results"),
       status: document.getElementById("status"),
       player: document.getElementById("player"),
       playerTitle: document.getElementById("playerTitle"),
       playerFrame: document.getElementById("playerFrame"),
       watchOnYT: document.getElementById("watchOnYT"),
-      apiKey: document.getElementById("apiKey"),
-      saveKey: document.getElementById("saveKey"),
+      toggleContainer: document.getElementById("toggleContainer"),
+      toggleAll: document.getElementById("toggleAll"),
+      ytApiKey: document.getElementById("ytApiKey"),
+      saveYtKey: document.getElementById("saveYtKey"),
+      openaiApiKey: document.getElementById("openaiApiKey"),
+      saveOpenAiKey: document.getElementById("saveOpenAiKey")
     };
 
+    // === STATE ===
+    let allVideos = [];
+    let rankedVideos = [];
+    let showingAll = false;
+
+    // === UTILITY FUNCTIONS ===
     function setStatus(msg) {
       els.status.textContent = msg || "";
+    }
+
+    function setPipelineStatus(msg) {
+      els.pipelineStatus.textContent = msg || "";
     }
 
     function formatDate(iso) {
@@ -218,57 +399,259 @@
       return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
     }
 
-    function clearResults() {
-      els.results.innerHTML = "";
+    function getYtKey() {
+      return localStorage.getItem("yt_api_key") || "";
     }
 
-    function renderResults(items) {
-      clearResults();
-      if (!items.length) {
-        setStatus("No results.");
+    function getOpenAiKey() {
+      return localStorage.getItem("openai_api_key") || "";
+    }
+
+    function saveYtKey() {
+      const key = els.ytApiKey.value.trim();
+      if (key) {
+        localStorage.setItem("yt_api_key", key);
+        setStatus("YouTube API key saved.");
+      } else {
+        localStorage.removeItem("yt_api_key");
+        setStatus("YouTube API key cleared.");
+      }
+    }
+
+    function saveOpenAiKey() {
+      const key = els.openaiApiKey.value.trim();
+      if (key) {
+        localStorage.setItem("openai_api_key", key);
+        setStatus("OpenAI API key saved.");
+      } else {
+        localStorage.removeItem("openai_api_key");
+        setStatus("OpenAI API key cleared.");
+      }
+    }
+
+    // === LLM CALLS ===
+    async function callOpenAI(prompt) {
+      const key = getOpenAiKey();
+      if (!key) throw new Error("OpenAI API key not set");
+
+      const response = await fetch(CONFIG.openaiApiBase, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${key}`
+        },
+        body: JSON.stringify({
+          model: CONFIG.openaiModel,
+          messages: [{ role: "user", content: prompt }],
+          temperature: 0.3
+        })
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`OpenAI API error: ${error}`);
+      }
+
+      const data = await response.json();
+      const content = data.choices[0].message.content.trim();
+      
+      // Parse JSON response
+      return JSON.parse(content);
+    }
+
+    // === YOUTUBE API ===
+    async function fetchYouTubeResults(query) {
+      const key = getYtKey();
+      if (!key) throw new Error("YouTube API key not set");
+
+      const params = new URLSearchParams({
+        part: "snippet",
+        type: "video",
+        maxResults: CONFIG.maxResults.toString(),
+        q: query,
+        key: key
+      });
+
+      const response = await fetch(`${CONFIG.youtubeApiBase}?${params.toString()}`);
+      if (!response.ok) {
+        throw new Error(`YouTube API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.items || [];
+    }
+
+    // === PIPELINE ===
+    async function runPipeline() {
+      const userInput = els.query.value.trim();
+      if (!userInput) {
+        setStatus("Please describe what you're looking for.");
         return;
       }
-      items.forEach((item) => {
-        const id = item.id && item.id.videoId;
-        if (!id) return;
 
-        const title = item.snippet.title;
-        const channel = item.snippet.channelTitle;
-        const date = formatDate(item.snippet.publishedAt);
-        const desc = item.snippet.description || "No description.";
+      const ytKey = getYtKey();
+      const openaiKey = getOpenAiKey();
+      
+      if (!ytKey) {
+        setStatus("Please add your YouTube API key first.");
+        return;
+      }
+      
+      if (!openaiKey) {
+        setStatus("Please add your OpenAI API key first.");
+        return;
+      }
+
+      els.searchBtn.disabled = true;
+      els.summary.classList.add("hidden");
+      els.results.innerHTML = "";
+      els.toggleContainer.classList.add("hidden");
+      setStatus("");
+
+      try {
+        // STAGE 1: Query Translation
+        setPipelineStatus("🧠 Stage 1/4: Translating your intent into search query...");
+        const translationPrompt = PROMPTS.translate.replace("{{USER_INPUT}}", userInput);
+        const translation = await callOpenAI(translationPrompt);
+        const optimizedQuery = translation.query;
+        const keyConcepts = translation.keyConcepts;
+
+        setPipelineStatus(`🔍 Stage 2/4: Searching YouTube for "${optimizedQuery}"...`);
+        
+        // STAGE 2: Fetch
+        allVideos = await fetchYouTubeResults(optimizedQuery);
+        
+        if (allVideos.length === 0) {
+          setStatus("No results found. Try a different description.");
+          setPipelineStatus("");
+          els.searchBtn.disabled = false;
+          return;
+        }
+
+        // STAGE 3: Classification
+        setPipelineStatus(`🎯 Stage 3/4: Evaluating ${allVideos.length} videos for quality and relevance...`);
+        
+        const videosForLLM = allVideos.map(v => ({
+          videoId: v.id.videoId,
+          title: v.snippet.title,
+          channel: v.snippet.channelTitle,
+          description: v.snippet.description.substring(0, 300),
+          publishedAt: v.snippet.publishedAt
+        }));
+
+        const classifyPrompt = PROMPTS.classify
+          .replace("{{USER_INPUT}}", userInput)
+          .replace("{{KEY_CONCEPTS}}", JSON.stringify(keyConcepts))
+          .replace("{{VIDEOS}}", JSON.stringify(videosForLLM));
+
+        const scored = await callOpenAI(classifyPrompt);
+
+        // STAGE 4: Ranking
+        setPipelineStatus("📊 Stage 4/4: Ranking and summarizing results...");
+        
+        const rankPrompt = PROMPTS.rank
+          .replace("{{USER_INPUT}}", userInput)
+          .replace("{{TOP_N}}", CONFIG.topResultsToShow.toString())
+          .replace("{{SCORED_VIDEOS}}", JSON.stringify(scored));
+
+        const final = await callOpenAI(rankPrompt);
+
+        // Display results
+        rankedVideos = final.ranked;
+        displaySummary(final.summary);
+        displayResults(false);
+        
+        setPipelineStatus("✅ Complete! Showing top matches.");
+        setTimeout(() => setPipelineStatus(""), 3000);
+
+      } catch (err) {
+        setStatus(`Error: ${err.message}`);
+        setPipelineStatus("");
+        console.error(err);
+      } finally {
+        els.searchBtn.disabled = false;
+      }
+    }
+
+    // === DISPLAY ===
+    function displaySummary(text) {
+      els.summaryText.textContent = text;
+      els.summary.classList.remove("hidden");
+    }
+
+    function displayResults(showAll) {
+      els.results.innerHTML = "";
+      showingAll = showAll;
+
+      const videosToShow = showAll ? allVideos.map((v, idx) => {
+        const scored = rankedVideos.find(r => r.videoId === v.id.videoId);
+        return {
+          video: v,
+          rank: scored ? rankedVideos.indexOf(scored) + 1 : idx + 1,
+          reasoning: scored ? scored.reasoning : "Not in top matches"
+        };
+      }) : rankedVideos.map((r, idx) => {
+        const video = allVideos.find(v => v.id.videoId === r.videoId);
+        return {
+          video: video,
+          rank: idx + 1,
+          reasoning: r.reasoning
+        };
+      });
+
+      videosToShow.forEach(item => {
+        if (!item.video) return;
+        
+        const v = item.video;
+        const snippet = v.snippet;
+        const videoId = v.id.videoId;
 
         const wrapper = document.createElement("article");
         wrapper.className = "result";
 
-        const h = document.createElement("h2");
-        h.className = "result-title";
+        const rank = document.createElement("span");
+        rank.className = "result-rank";
+        rank.textContent = `#${item.rank}`;
+
+        const titleEl = document.createElement("h2");
+        titleEl.className = "result-title";
 
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.textContent = title;
-        btn.addEventListener("click", () => playVideo(id, title));
+        btn.textContent = snippet.title;
+        btn.addEventListener("click", () => playVideo(videoId, snippet.title));
 
-        h.appendChild(btn);
+        titleEl.appendChild(btn);
 
         const meta = document.createElement("div");
         meta.className = "meta";
-        meta.textContent = `${channel} • ${date}`;
+        meta.textContent = `${snippet.channelTitle} • ${formatDate(snippet.publishedAt)}`;
 
-        const p = document.createElement("p");
-        p.className = "desc";
-        p.textContent = desc;
+        const reasoning = document.createElement("div");
+        reasoning.className = "reasoning";
+        reasoning.textContent = `💡 ${item.reasoning}`;
 
-        wrapper.appendChild(h);
+        const desc = document.createElement("p");
+        desc.className = "desc";
+        desc.textContent = snippet.description || "No description.";
+
+        wrapper.appendChild(rank);
+        wrapper.appendChild(titleEl);
         wrapper.appendChild(meta);
-        wrapper.appendChild(p);
+        wrapper.appendChild(reasoning);
+        wrapper.appendChild(desc);
 
         els.results.appendChild(wrapper);
       });
-      setStatus(`${items.length} results.`);
+
+      // Toggle button
+      if (allVideos.length > CONFIG.topResultsToShow) {
+        els.toggleContainer.classList.remove("hidden");
+        els.toggleAll.textContent = showAll ? "Show top matches only" : `Show all ${allVideos.length} results`;
+      }
     }
 
     function playVideo(videoId, title) {
-      // Use nocookie domain + autoplay for better local file compatibility
       els.playerFrame.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
       els.playerTitle.textContent = `Playing: ${title}`;
       els.watchOnYT.href = `https://www.youtube.com/watch?v=${videoId}`;
@@ -276,69 +659,25 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function getKey() {
-      return localStorage.getItem("yt_api_key") || "";
-    }
-
-    function saveKey() {
-      const key = els.apiKey.value.trim();
-      if (key) {
-        localStorage.setItem("yt_api_key", key);
-        setStatus("API key saved locally.");
-      } else {
-        localStorage.removeItem("yt_api_key");
-        setStatus("API key cleared.");
-      }
-    }
-
-    async function search() {
-      const q = els.query.value.trim();
-      if (!q) {
-        setStatus("Type a search query.");
-        return;
-      }
-      const key = getKey();
-      if (!key) {
-        setStatus("Add your API key first.");
-        return;
-      }
-
-      setStatus("Searching…");
-      els.searchBtn.disabled = true;
-
-      const params = new URLSearchParams({
-        part: "snippet",
-        type: "video",
-        maxResults: "12",
-        q,
-        key,
-      });
-
-      try {
-        const res = await fetch(`${API_BASE}?${params.toString()}`);
-        if (!res.ok) {
-          const text = await res.text();
-          throw new Error(text || `HTTP ${res.status}`);
-        }
-        const data = await res.json();
-        renderResults(data.items || []);
-      } catch (err) {
-        setStatus("Error fetching results. Check your API key and quota.");
-        console.error(err);
-      } finally {
-        els.searchBtn.disabled = false;
-      }
-    }
-
-    els.searchBtn.addEventListener("click", search);
+    // === EVENT LISTENERS ===
+    els.searchBtn.addEventListener("click", runPipeline);
     els.query.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") search();
+      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+        runPipeline();
+      }
     });
-    els.saveKey.addEventListener("click", saveKey);
 
-    // Load saved key
-    els.apiKey.value = getKey();
+    els.toggleAll.addEventListener("click", () => {
+      displayResults(!showingAll);
+    });
+
+    els.saveYtKey.addEventListener("click", saveYtKey);
+    els.saveOpenAiKey.addEventListener("click", saveOpenAiKey);
+
+    // Load saved keys
+    els.ytApiKey.value = getYtKey();
+    els.openaiApiKey.value = getOpenAiKey();
   </script>
 </body>
 </html>
-
+<!-- $(date) -->
