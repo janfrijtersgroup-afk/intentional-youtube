@@ -69,6 +69,16 @@ Top 3-5 results with reasoning + option to see all 50
 | No explanation | Explains WHY each video matches |
 | Can't be changed | Edit the prompts! |
 
+## Data-Driven Prompt Optimization
+
+The tool includes a **📊 Export Results** button that saves complete search data as JSON:
+- Your original query + optimized search query
+- All 50 results with full metadata
+- LLM scores and reasoning for each video
+- Your quality observations (notes field)
+
+**Use case:** Run 3 diverse searches, export each, then use a high-powered model (Opus 4.5, GPT-5.2) to analyze patterns and write optimized classification prompts based on real data instead of guessing.
+
 ## Customization
 
 The LLM prompts are defined at the top of `index.html` in the `PROMPTS` object. Edit them to change how videos are evaluated:
