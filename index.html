@@ -90,6 +90,35 @@
       line-height: 1.6;
       color: #333;
     }
+    .export-section {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #b3d9ff;
+    }
+    .export-section textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 60px;
+      margin-bottom: 8px;
+    }
+    .export-section button {
+      padding: 8px 16px;
+      border: none;
+      background: #0066cc;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .export-section button:hover {
+      background: #0052a3;
+    }
     .player {
       background: #fff;
       border: 1px solid #ddd;
@@ -259,6 +288,11 @@
     <section id="summary" class="summary-box hidden">
       <h3>Why these videos match your intent:</h3>
       <p id="summaryText"></p>
+      <div class="export-section">
+        <label for="userNotes" style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Your quality observations (optional):</label>
+        <textarea id="userNotes" placeholder="Add notes about which results were actually good, what patterns you notice, etc..."></textarea>
+        <button id="exportBtn">📊 Export Results for Analysis</button>
+      </div>
     </section>
 
     <section id="player" class="player hidden">
@@ -301,7 +335,7 @@
     const CONFIG = {
       youtubeApiBase: "https://www.googleapis.com/youtube/v3/search",
       openaiApiBase: "https://api.openai.com/v1/chat/completions",
-      openaiModel: "gpt-4o-mini", // Change to "gpt-5-nano" if that's the correct model name
+      openaiModel: "gpt-5-nano", // Change to "gpt-5-nano" if that's the correct model name
       maxResults: 50,
       topResultsToShow: 5
     };
@@ -379,6 +413,8 @@ CRITICAL: Return ONLY the JSON object above, with no markdown, no code fences, n
       pipelineStatus: document.getElementById("pipelineStatus"),
       summary: document.getElementById("summary"),
       summaryText: document.getElementById("summaryText"),
+      userNotes: document.getElementById("userNotes"),
+      exportBtn: document.getElementById("exportBtn"),
       results: document.getElementById("results"),
       status: document.getElementById("status"),
       player: document.getElementById("player"),
@@ -397,6 +433,7 @@ CRITICAL: Return ONLY the JSON object above, with no markdown, no code fences, n
     let allVideos = [];
     let rankedVideos = [];
     let showingAll = false;
+    let searchData = null; // Store complete search data for export
 
     // === UTILITY FUNCTIONS ===
     function setStatus(msg) {
@@ -474,7 +511,7 @@ CRITICAL: Return ONLY the JSON object above, with no markdown, no code fences, n
         body: JSON.stringify({
           model: CONFIG.openaiModel,
           messages: [{ role: "user", content: prompt }],
-          temperature: 0.3
+          temperature: 1
         })
       });
 
@@ -594,6 +631,25 @@ CRITICAL: Return ONLY the JSON object above, with no markdown, no code fences, n
 
         const final = await callOpenAI(rankPrompt);
 
+        // Store complete search data for export
+        searchData = {
+          timestamp: new Date().toISOString(),
+          userQuery: userInput,
+          optimizedQuery: optimizedQuery,
+          keyConcepts: keyConcepts,
+          summary: final.summary,
+          allResults: allVideos.map(v => ({
+            videoId: v.id.videoId,
+            title: v.snippet.title,
+            channel: v.snippet.channelTitle,
+            description: v.snippet.description,
+            publishedAt: v.snippet.publishedAt,
+            thumbnails: v.snippet.thumbnails
+          })),
+          scoredResults: scored,
+          rankedResults: final.ranked
+        };
+
         // Display results
         rankedVideos = final.ranked;
         displaySummary(final.summary);
@@ -697,6 +753,32 @@ CRITICAL: Return ONLY the JSON object above, with no markdown, no code fences, n
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    // === EXPORT ===
+    function exportResults() {
+      if (!searchData) {
+        alert("No search results to export. Run a search first.");
+        return;
+      }
+
+      const exportData = {
+        ...searchData,
+        userNotes: els.userNotes.value.trim(),
+        exportedAt: new Date().toISOString()
+      };
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `intentional-youtube-${Date.now()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      setStatus("Results exported! Check your downloads folder.");
+    }
+
     // === EVENT LISTENERS ===
     els.searchBtn.addEventListener("click", runPipeline);
     els.query.addEventListener("keydown", (e) => {
@@ -708,6 +790,8 @@ CRITICAL: Return ONLY the JSON object above, with no markdown, no code fences, n
     els.toggleAll.addEventListener("click", () => {
       displayResults(!showingAll);
     });
+
+    els.exportBtn.addEventListener("click", exportResults);
 
     els.saveYtKey.addEventListener("click", saveYtKey);
     els.saveOpenAiKey.addEventListener("click", saveOpenAiKey);
