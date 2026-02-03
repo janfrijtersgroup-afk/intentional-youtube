@@ -362,11 +362,53 @@ CRITICAL: Return ONLY the JSON object above, with no markdown, no code fences, n
 Original user intent: {{USER_INPUT}}
 Key concepts to match: {{KEY_CONCEPTS}}
 
-For each video, evaluate:
-- NEGATIVE signals (clickbait titles, engagement farming, shallow content indicators)
-- POSITIVE signals (information density, depth, substantive titles, educational markers)
-- RELEVANCE to key concepts (pattern matching to user's intent)
+You will be given a list of video metadata objects: {{VIDEOS}}
 
+TASK
+For EACH video, output a JSON object with:
+- "videoId": string
+- "score": integer from 0 to 100 (higher is better)
+- "reasoning": a brief, specific explanation (1–2 sentences max)
+
+EVALUATION RULES (use ONLY provided metadata; do NOT assume content beyond it)
+
+1) RELEVANCE (primary driver)
+   - Identify whether the title/description/channel clearly matches the key concepts and the intent.
+   - Strong match: directly addresses most key concepts and the intent (topic + format).
+   - Partial match: related topic but missing important key concepts or wrong format.
+   - Mismatch: different topic, different domain, or clearly unrelated.
+
+2) POSITIVE SIGNALS (increase score)
+   Look for markers of high informational value / depth / credibility in metadata, such as:
+   - Specific, substantive title (mentions framework, walkthrough, interview/podcast, case study, step-by-step, deep dive, full guide).
+   - Credible source cues in channel name/description (recognized institution, expert role, professional organization).
+   - Evidence of structure or depth in description (agenda, chapters, data sources, concrete claims).
+   - Format fit to intent (e.g., "long-form interview" when intent demands it; "full guide" for tutorials).
+
+3) NEGATIVE SIGNALS (decrease score)
+   Look for engagement-farming / clickbait / shallow-content indicators, such as:
+   - Sensational framing: ALL CAPS, excessive emojis, "shocking", "you won't believe", "watch till the end", "must watch".
+   - Vague titles that hide the topic, heavy hype, or "get rich quick" style promises.
+   - Irrelevant trending keywords/hashtags unrelated to the intent.
+   - Obvious mismatch patterns (e.g., tutorials/tools/jobs/interview-tips when intent is macro investing; unrelated domains).
+   - Spam/affiliate-heavy description that overwhelms substantive detail (if visible).
+
+SCORING GUIDANCE (start from relevance, then adjust)
+- Start at 0 and build up:
+  - Relevance:
+    - 0–20: unrelated/mismatch
+    - 21–50: weak/partial relevance
+    - 51–80: strong relevance
+    - 81–100: excellent relevance + clear format fit
+  - Then adjust within the band:
+    - +5 to +15 for strong POSITIVE signals
+    - -5 to -25 for strong NEGATIVE signals
+  - If relevance is a mismatch, cap score at 20 regardless of other signals.
+  - If relevance is strong but there are moderate negatives, keep score in 50–75 range.
+  - If relevance is strong AND positives are strong with minimal negatives, score 80–95.
+  - Reserve 96–100 for near-perfect matches on intent + key concepts + high credibility/depth signals.
+
+OUTPUT FORMAT (STRICT)
 Return a JSON array with EXACTLY this structure:
 [
   {
@@ -376,10 +418,10 @@ Return a JSON array with EXACTLY this structure:
   }
 ]
 
-Videos to evaluate:
-{{VIDEOS}}
-
-CRITICAL: Return ONLY the JSON array above, with no markdown, no code fences, no explanations. Just pure JSON.`,
+CRITICAL OUTPUT CONSTRAINTS
+- Return ONLY the JSON array.
+- No markdown, no code fences, no extra keys, no commentary, no trailing text.
+- Ensure the array contains one object per input video, in the same order as provided (unless videoId is missing; then still include an object with videoId as an empty string).`,
 
       rank: `You are producing a final ranked list and summary for the user.
 
