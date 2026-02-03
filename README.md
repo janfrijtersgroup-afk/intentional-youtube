@@ -103,13 +103,61 @@ const PROMPTS = {
 - **YouTube API:** 100 units per search (10,000 free/day = 100 searches)
 - **OpenAI API:** ~$0.003-0.005 per search using `gpt-4o-mini`
 
-## Philosophy
+## Philosophy: A Manifesto for Free Won't
 
-You should control your own information diet. Algorithmic feeds optimize for the platform's goals (engagement, ad revenue), not yours (learning, understanding, growth).
+### The Problem
 
-This tool gives you sovereignty over how content is filtered and ranked. You define quality. You set the criteria. You audit the logic.
+YouTube's algorithm is designed to minimize friction and maximize engagement:
+- Homepage = instant scroll (no thought required)
+- Recommendations optimize for watch time (their goal, not yours)
+- Autoplay removes exit points (infinite consumption loop)
 
-**Algorithmic sovereignty.** 🦅
+**You think you're choosing what to watch. You're not. You're being nudged.**
+
+### The Insight
+
+Free will might be an illusion, but **free won't** is real. You can't always control what you want, but you can gate whether you act on it.
+
+**Friction is a feature, not a bug.**
+
+### What This Tool Does Differently
+
+Every other YouTube tool tries to make consumption easier, faster, more frictionless. This one makes it *harder*—and that's the point.
+
+**Before you search:**
+- You must articulate your intent (verbose query box)
+- You must know what you're looking for
+- You can't mindlessly "browse"
+
+**The query box is a commitment device.** If you can't write 2-3 sentences about why you're here, you probably shouldn't be.
+
+### The Architecture of Agency
+
+| YouTube's Design | Intentional YouTube |
+|-----------------|---------------------|
+| Minimize entry friction | Maximize entry deliberation |
+| Optimize for watch time | Optimize for YOUR criteria |
+| Remove exit points | Built-in completion (you got what you came for, now leave) |
+
+### Multi-Level Value
+
+**Layer 1 (Technical):** Better search results, transparent algorithm, customizable scoring.
+
+**Layer 2 (Cognitive):** Forces you to know what you're looking for before you start searching.
+
+**Layer 3 (Behavioral):** Gating consumption with deliberation. The tool won't let you scroll mindlessly.
+
+### Why This Matters
+
+Attention isn't stolen—it's ceded through a thousand micro-decisions. Every "just browsing" session is a choice to let the algorithm decide for you.
+
+This tool gives you **algorithmic sovereignty**, but the real power is at the behavioral level: it makes you think before you click.
+
+**You're not optimizing consumption. You're optimizing agency.** 🦅
+
+---
+
+*If you can't articulate what you're trying to learn, you're not learning—you're being entertained.*
 
 ## License
 
