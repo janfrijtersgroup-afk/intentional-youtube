@@ -277,6 +277,16 @@
     <p class="tagline">Describe what you're looking for. Your algorithm, your rules.</p>
   </header>
 
+  <!-- 1. VIDEO BOX - Attentional focus -->
+  <section id="player" class="player hidden">
+    <h3 id="playerTitle">Playing:</h3>
+    <iframe id="playerFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="player-fallback">
+      Video not loading? <a id="watchOnYT" href="#" target="_blank" rel="noopener">Watch on YouTube</a>
+    </div>
+  </section>
+
+  <!-- 2. SEARCH BOX - Entry point -->
   <div class="search-box">
     <label for="query">What are you looking for?</label>
     <textarea id="query" placeholder="Describe in detail what you're trying to learn or understand. Be specific about your goals, context, and what would make a video valuable to you..." autofocus></textarea>
@@ -285,6 +295,7 @@
   </div>
 
   <div class="container">
+    <!-- 3. RATIONALE & FEEDBACK - Near results for context -->
     <section id="summary" class="summary-box hidden">
       <h3>Why these videos match your intent:</h3>
       <p id="summaryText"></p>
@@ -295,14 +306,7 @@
       </div>
     </section>
 
-    <section id="player" class="player hidden">
-      <h3 id="playerTitle">Playing:</h3>
-      <iframe id="playerFrame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      <div class="player-fallback">
-        Video not loading? <a id="watchOnYT" href="#" target="_blank" rel="noopener">Watch on YouTube</a>
-      </div>
-    </section>
-
+    <!-- 4. RANKING LIST -->
     <section id="results" class="results"></section>
     
     <div id="toggleContainer" class="toggle-all hidden">
