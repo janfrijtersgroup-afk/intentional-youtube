@@ -313,13 +313,15 @@
 Your task:
 1. Extract the core concepts and key terms
 2. Generate an optimized YouTube search query (3-8 words max)
-3. Return a JSON object with:
-   - "query": the optimized search string
-   - "keyConcepts": array of key concepts to match against (for later relevance scoring)
+3. Return a JSON object with EXACTLY this structure:
+{
+  "query": "optimized search string here",
+  "keyConcepts": ["concept1", "concept2", "concept3"]
+}
 
 User's description: {{USER_INPUT}}
 
-Respond with ONLY valid JSON, no additional text.`,
+CRITICAL: Return ONLY the JSON object above, with no markdown, no code fences, no explanations. Just pure JSON.`,
 
       classify: `You are evaluating YouTube search results for quality and relevance.
 
@@ -331,31 +333,43 @@ For each video, evaluate:
 - POSITIVE signals (information density, depth, substantive titles, educational markers)
 - RELEVANCE to key concepts (pattern matching to user's intent)
 
-Return a JSON array of objects with:
-- "videoId": the video ID
-- "score": 0-100 (overall quality + relevance)
-- "reasoning": brief explanation (2-3 sentences max)
+Return a JSON array with EXACTLY this structure:
+[
+  {
+    "videoId": "abc123",
+    "score": 85,
+    "reasoning": "Brief explanation here"
+  }
+]
 
 Videos to evaluate:
 {{VIDEOS}}
 
-Respond with ONLY valid JSON array, no additional text.`,
+CRITICAL: Return ONLY the JSON array above, with no markdown, no code fences, no explanations. Just pure JSON.`,
 
       rank: `You are producing a final ranked list and summary for the user.
 
 Original user request: {{USER_INPUT}}
 
 You have scored videos. Now:
-1. Select the top {{TOP_N}} videos
+1. Select the top {{TOP_N}} videos by score
 2. Write a 2-3 sentence summary explaining HOW these videos match the user's intent
-3. Return JSON with:
-   - "summary": your explanation
-   - "ranked": array of top video objects (videoId, score, reasoning)
+3. Return JSON with EXACTLY this structure:
+{
+  "summary": "Your 2-3 sentence explanation here",
+  "ranked": [
+    {
+      "videoId": "abc123",
+      "score": 95,
+      "reasoning": "Why this video matches"
+    }
+  ]
+}
 
 Scored videos:
 {{SCORED_VIDEOS}}
 
-Respond with ONLY valid JSON, no additional text.`
+CRITICAL: Return ONLY the JSON object above, with no markdown, no code fences, no explanations. Just pure JSON.`
     };
 
     // === DOM ELEMENTS ===
@@ -430,6 +444,23 @@ Respond with ONLY valid JSON, no additional text.`
     }
 
     // === LLM CALLS ===
+    function extractJSON(text) {
+      // Try to extract JSON from markdown code fences or mixed content
+      const fenceMatch = text.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/);
+      if (fenceMatch) {
+        return fenceMatch[1].trim();
+      }
+      
+      // Try to find JSON object/array boundaries
+      const jsonMatch = text.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
+      if (jsonMatch) {
+        return jsonMatch[1].trim();
+      }
+      
+      // Return as-is if no extraction needed
+      return text.trim();
+    }
+
     async function callOpenAI(prompt) {
       const key = getOpenAiKey();
       if (!key) throw new Error("OpenAI API key not set");
@@ -455,8 +486,15 @@ Respond with ONLY valid JSON, no additional text.`
       const data = await response.json();
       const content = data.choices[0].message.content.trim();
       
-      // Parse JSON response
-      return JSON.parse(content);
+      // Extract and parse JSON response
+      const jsonText = extractJSON(content);
+      
+      try {
+        return JSON.parse(jsonText);
+      } catch (e) {
+        console.error("Failed to parse JSON:", jsonText);
+        throw new Error(`LLM returned invalid JSON: ${e.message}. Response was: ${content.substring(0, 200)}...`);
+      }
     }
 
     // === YOUTUBE API ===
